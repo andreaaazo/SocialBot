@@ -34,18 +34,21 @@ class TikTokBot:
 	
 
 	def tiktoklogin(self):
+
+		sleep(4)
+
 		try:
 			# Facebook login page
-			print("Loading facebook login page...")
-			self.driver.get("https://shorturl.at/cyzCN")
+			print("Loading instagram login page...")
+			self.driver.get("https://www.instagram.com/")
 			
 			# Wait until page loaded
-			try:
+			""" try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
 					(By.ID, 'booklet')))
 			except TimeoutException:
 				self.driver.quit()
-				return print('Failed to load facebook login page')
+				return print('Failed to load facebook login page') """
 
 			print("Page sucessfully loaded")
 			print("Getting rid of pop up")
@@ -53,45 +56,53 @@ class TikTokBot:
 			# Check cookie pop-up
 			try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-					(By.CLASS_NAME, '_42ft._4jy0._9xo7._4jy3._4jy1.selected._51sy')))
-				self.driver.find_element(By.CLASS_NAME, '_42ft._4jy0._9xo7._4jy3._4jy1.selected._51sy').click()
+					(By.CLASS_NAME, 'aOOlW.HoLwm')))
+				self.driver.find_element(By.CLASS_NAME, 'aOOlW.HoLwm').click()
 				print("Pop up eliminated :)")
 			except TimeoutException:
 				return print("No pop up :)")
 
-			print("Inserting facebook credentials")
+			print("Inserting Instagram credentials")
 
 			# Wait until page loaded
 			try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-					(By.XPATH, '//input[@id="email"]')))
+					(By.XPATH, '//input[@name="username"]')))
 			except TimeoutException:
 				self.driver.quit()
-				return print('Failed to load facebook login page')
+				return print('Failed to load instagram login page')
 
-			# Facebook login
+			# Instagram login
 			try:
-				self.driver.find_element(By.XPATH, '//input[@id="email"]').send_keys('jdm.crew@outlook.com')
+				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('jdm.crew@outlook.com')
 			except NoSuchElementException:
 				self.driver.quit()
-				return print('Failed to insert facebook login email')
+				return print('Failed to insert instagram login email')
 			
 			try:
-				self.driver.find_element(By.XPATH, '//input[@id="pass"]').send_keys('Andrea23')
+				self.driver.find_element(By.XPATH, '//input[@name="password"]').send_keys('Andrea23')
 			except NoSuchElementException:
 				self.driver.quit()
-				return print('Failed to insert facebook password')
+				return print('Failed to insert instagram password')
 
 			try:
-				self.driver.find_element(By.XPATH, '//input[@id="pass"]').send_keys(Keys.ENTER)		
+				self.driver.find_element(By.XPATH, '//input[@name="password"]').send_keys(Keys.ENTER)		
 			except NoSuchElementException:
 				self.driver.quit()
-				return print('Failed to send Facebook login')
+				return print('Failed to send Instragram login')
 			
-			print("Facebook credentials sucessfully sent")
+			print("Instagram credentials sucessfully sent")
+			
+			try:
+				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
+				(By.CLASS_NAME, "_a9--._a9_1")))
+				self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
+			except TimeoutException:
+				print("Can't turn off notifications")
+				self.driver.quit()
 			
 			# Wait until page loaded
-			try:
+			""" try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.CLASS_NAME, 'channel-item-wrapper-2gBWB')))
 			except TimeoutException:
 				try:
@@ -103,10 +114,10 @@ class TikTokBot:
 						WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.CLASS_NAME, 'tiktok-xbg2z9-DivBoxContainer.e1cgu1qo0')))
 					except TimeoutException:
 						self.driver.quit()
-						return print("Failed to connect to TikTok page")
+						return print("Failed to connect to TikTok page") """
 			
-			# TikTok login button
-			try:
+			# Instagram login button
+			""" try:
 				divArray = self.driver.find_elements(By.CLASS_NAME, 'channel-item-wrapper-2gBWB')
 				if not divArray:
 					divArray = self.driver.find_elements(By.CLASS_NAME, 'tiktok-xbg2z9-DivBoxContainer.e1cgu1qo0')
@@ -124,7 +135,7 @@ class TikTokBot:
 			try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.CLASS_NAME, 'tiktok-r0hg2a-DivSideNavContainer.e1irlpdw1')))
 			except TimeoutException:
-				return print("Failed to connect to TikTok")
+				return print("Failed to connect to Instagram") """
 
 			print("Success login")
 		except MaxRetryError:
@@ -140,11 +151,28 @@ class TikTokBot:
 	def tiktokpost(self):
 		try:
 			print("Posting...")
-			self.driver.get("https://www.tiktok.com/upload")
-			print("Waiting page to load...")
+
+			try:
+				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
+				(By.CLASS_NAME, "_abl-._abm2")))
+				self.driver.find_element(By.CLASS_NAME, "_abl-._abm2").click()
+			except TimeoutException:
+				print("Can't turn off notifications")
+				self.driver.quit()
+			
+			try:
+				drag_drop = self.driver.find_elements(By.XPATH, '//input[@class="_ac69"]')
+				drag_drop[1].send_keys('/home/losilof39/Documents/repos/SocialBot/test.mp4')
+			except NoSuchElementException:
+				self.driver.quit()
+				return print('Failed to drag image or video')
+			
+
+			#self.driver.get("https://www.tiktok.com/upload")
+			#print("Waiting page to load...")
 			
 			# Switching to iframe
-			self.driver.switch_to.frame(self.driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/iframe'))
+			""" self.driver.switch_to.frame(self.driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/iframe'))
 
 			# Wait until TikTok upload page loaded
 			try: 
@@ -208,7 +236,7 @@ class TikTokBot:
 			# Get to TikTok Home
 			sleep(10)
 			self.driver.get("https://www.tiktok.com")
-			self.driver.quit()
+			self.driver.quit() """
 
 		except MaxRetryError:
 			return print("Session aborted")
@@ -223,4 +251,4 @@ if __name__ == '__main__':
 	bot = TikTokBot()
 	bot.boot()
 	bot.tiktoklogin()
-	#bot.tiktokpost()
+	bot.tiktokpost()
