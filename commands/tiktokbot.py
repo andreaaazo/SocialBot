@@ -33,7 +33,7 @@ class TikTokBot:
 		self.driver.execute_cdp_cmd("Network.setCacheDisabled", {"cacheDisabled":True})
 	
 
-	def tiktoklogin(self):
+	def login(self):
 		try:
 			# Facebook login page
 			print("Loading facebook login page...")
@@ -137,7 +137,7 @@ class TikTokBot:
 			return print("Session aborted")
 
 
-	def tiktokpost(self):
+	def post(self):
 		try:
 			print("Posting...")
 			self.driver.get("https://www.tiktok.com/upload")
@@ -223,5 +223,5 @@ class TikTokBot:
 if __name__ == '__main__':
 	bot = TikTokBot()
 	bot.boot()
-	bot.tiktoklogin()
-	bot.tiktokpost()
+	bot.login()
+	bot.post()
