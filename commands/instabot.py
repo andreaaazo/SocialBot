@@ -8,6 +8,8 @@ from selenium.webdriver.common.keys import Keys
 
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidSessionIdException, NoSuchWindowException, InvalidArgumentException
 
+from selenium.webdriver.common.action_chains import ActionChains
+
 from urllib3.exceptions import MaxRetryError
 
 from time import sleep
@@ -63,7 +65,7 @@ class InstagramBot:
 
 			# Instagram login
 			try:
-				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('sneakers.humor@outlook.com')
+				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('dankly.post@outlook.com')
 			except NoSuchElementException:
 				self.driver.quit()
 				return print('Failed to insert instagram login email')
@@ -121,7 +123,7 @@ class InstagramBot:
 			# Posting video
 			try:
 				drag_drop = self.driver.find_elements(By.XPATH, '//input[@class="_ac69"]')
-				drag_drop[1].send_keys('/Users/andreazorzi/Desktop/SocialBot 2.2/test.mp4')
+				drag_drop[2].send_keys('/Users/andreazorzi/Desktop/SocialBot 2.2/test.mp4')
 			except NoSuchElementException:
 				self.driver.quit()
 				return print('Failed to drag image or video')
@@ -133,20 +135,19 @@ class InstagramBot:
 			# Wait until page is loaded
 			try:
 				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-				(By.CLASS_NAME, "_acan._acao._acas")))
+				(By.CLASS_NAME, "_ac7b._ac7d")))
 			except TimeoutException:
 				self.driver.quit()
 				return print("Unable to post")
+			
+			print("Sleeping for 100 seconds to let the video upload")
 
-			# Active element
-			self.driver.switch_to_active_element()
-
+			sleep(10)
 
 			# Post button
 			for _ in range(2):
 				try:
-					post_button = self.driver.find_elements(By.XPATH, '//button[@class="_acan _acao _acas"]')
-					post_button[2].click()
+					self.driver.find_element(By.CLASS_NAME, '_ac7b._ac7d').find_element(By.CLASS_NAME, '_acan._acao._acas').click()
 					sleep(3)
 				except IndexError:
 					self.driver.quit()
@@ -156,7 +157,8 @@ class InstagramBot:
 		
 			# Add caption
 			try:
-				textarea_caption = self.driver.find_elements(By.XPATH, '//textarea')
+				textarea_caption = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.XPATH, '//textarea')
+				print(len(textarea_caption))
 				textarea_caption[0].send_keys('caption')
 			except IndexError:
 				self.driver.quit()
@@ -166,10 +168,10 @@ class InstagramBot:
 
 			# Disable likes
 			try:
-				disableLikes = self.driver.find_elements(By.CLASS_NAME, '_abm9')
+				disableLikes = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.CLASS_NAME, '_abm9')
 				disableLikes[1].click()
 				self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-				likesCheckbox = self.driver.find_elements(By.XPATH, '//label[@class="_ac5-"]')
+				likesCheckbox = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.XPATH, '//label[@class="_ac5-"]')
 				likesCheckbox[0].click()
 			except IndexError:
 				self.driver.quit()
@@ -179,8 +181,7 @@ class InstagramBot:
 
 			# Post button
 			try:
-				post_button = self.driver.find_elements(By.CLASS_NAME, '_acan._acao._acas')
-				post_button[0].click()
+				self.driver.find_element(By.CLASS_NAME, '_ac7b._ac7d').find_element(By.CLASS_NAME, '_acan._acao._acas').click()
 			except IndexError:
 				self.driver.quit()
 				return print("Unable to click the post button")
