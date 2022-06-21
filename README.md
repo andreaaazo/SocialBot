@@ -1,14 +1,12 @@
 <h1 align="center"> Social Bot </h1>
-
-# Social Bot
-_Made by @andreaaa.zo & @lukesafes_
+<p align="center">Made by @andreaaa.zo & @lukesafes</p>
 
 This is a social bot with a lot of features!
 It automates boring stuff on Instagram & TikTok.
 
 Let it run on a machine, and let the magic happen!
 
-## ⚡️ Features
+## ⚡️  Features
 * **Main Features**
   * Proxy switch
   * Auto-post
@@ -23,13 +21,13 @@ Let it run on a machine, and let the magic happen!
   * Login
   * Posting
 
-## 👀 To-do
+## 👀  To-do
 - [ ] Finish GUI
 - [ ] Implement Database
 - [ ] Implement Proxies
 - [x] Finish bots
 
-## 🧬 Frameworks
+## 🧬  Frameworks
 [Selenium](https://github.com/SeleniumHQ/selenium)
 
 [Tkinter](https://docs.python.org/3/library/tk.html)
