@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter.dnd import *
 import tkinter.font
+import commands.tiktokbot, commands.instabot
 
 
 class account(Frame):
