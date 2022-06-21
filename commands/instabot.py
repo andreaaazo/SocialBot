@@ -103,10 +103,6 @@ class InstagramBot:
 		except NoSuchWindowException:
 			return print("Session aborted")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Bots/Proxies
 	def post(self):
 		try:
 			self.driver.get("https://www.instagram.com/")
