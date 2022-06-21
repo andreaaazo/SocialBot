@@ -2,8 +2,6 @@
 
   <h1> Social Bot </h1>
 
-  <p>Made by @andreaaa.zo & @lukesafes</p>
-
   <br />
 
   <p>This is a social bot with a lot of features!</p>
@@ -11,10 +9,14 @@
   <p>It automates boring stuff on Instagram & TikTok.</p>
 
   <p>Let it run on a machine, and let the magic happen!</p>
-  
+
 </div>
 
 ---
+
+<br />
+
+<br />
 
 ## 📒 Index
 *  [Features](https://github.com/andreaaazo/SocialBot#--features)
