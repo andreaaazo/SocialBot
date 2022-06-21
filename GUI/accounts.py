@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.dnd import *
+from tkinter.filedialog import askopenfilename
 import tkinter.font
 
 from commands.instabot import *
@@ -32,13 +33,17 @@ class account(Frame):
 			self.bots[social.TIKTOK].login()
 			self.currentSocial = social.TIKTOK
 
-		def submitButton(filepath):
+		def submitButton():
 			if self.currentSocial < 0:
 				print("You haven't logged in any social!")
 			elif self.filepath == "":
 				print("You didn't choose any image or video!")
 			else:
 				self.bots[self.currentSocial].post()
+
+		def chooseFile():
+			self.filepath = askopenfilename(filetypes=[("All Files", "*.*")])
+			#print(self.filepath)
 
 		# we use this class to make more easier to read which social is used
 		class social():
@@ -67,7 +72,7 @@ class account(Frame):
 		self.title.configure(font=self.bold, bd=0)
 
 		# form frame
-		self.formFrame = LabelFrame(self, text="Insert your Facebook informations:")
+		self.formFrame = LabelFrame(self, text="Insert your E-mail or Username:")
 		self.formFrame.grid(row=1, column=0, sticky=W)
 		self.formFrame.configure(font=self.semibold, bd=0)
 
@@ -78,7 +83,7 @@ class account(Frame):
 
 		self.username = Entry(self.formFrame, bd=0)
 		self.username.grid(row=0, column=0, ipadx=150, ipady=5, pady=5)
-		self.username.insert(0, 'E-mail')
+		self.username.insert(0, 'E-mail/Username')
 		self.username.bind('<FocusIn>', lambda event: focusIn(self.username))
 		self.username.bind('<FocusOut>', lambda event: focusOut(self.username, 'E-mail'))
 		self.username.bind('<Return>', lambda event: self.focus())
@@ -146,7 +151,7 @@ class account(Frame):
 		self.getPostCredentials.configure(font=self.button)
 
 		# video path button
-		self.getVideoPath = Button(self.postFrame, text="Select video path")
+		self.getVideoPath = Button(self.postFrame, text="Select image/video path", command=chooseFile)
 		self.getVideoPath.grid(row=0, column=2, rowspan=2, padx=(25, 0), ipady=20)
 		self.getVideoPath.configure(font=self.button)
 
