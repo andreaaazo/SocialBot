@@ -12,17 +12,18 @@
 
 </div>
 
----
-
 <br />
 
 <br />
 
 ## 📒 Index
-*  [Features](https://github.com/andreaaazo/SocialBot#--features)
-*  [To-do](https://github.com/andreaaazo/SocialBot#--to-do)
-*  [Frameworks](https://github.com/andreaaazo/SocialBot#--frameworks)
+*  [Features](https://github.com/andreaaazo/SocialBot#-features)
+*  [To-do](https://github.com/andreaaazo/SocialBot#-to-do)
+*  [Frameworks](https://github.com/andreaaazo/SocialBot#-frameworks)
 
+<br />
+
+<br />
 
 ## ⚡️ Features
 * **Main Features**
@@ -39,11 +40,19 @@
   * Login
   * Posting
 
+<br />
+
+<br />
+
 ## 👀 To-do
 - [ ] Finish GUI
 - [ ] Implement Database
 - [ ] Implement Proxies
 - [x] Finish bots
+
+<br />
+
+<br />
 
 ## 🧬 Frameworks
 [Selenium](https://github.com/SeleniumHQ/selenium)
