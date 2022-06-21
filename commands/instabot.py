@@ -36,10 +36,9 @@ class InstagramBot:
 	def login(self):
 		try:
 			# Instagram login page
-			print("Loading instagram login page...")
-			
 			self.driver.get("https://www.instagram.com/")
 			
+			print("Loading instagram login page...")
 			print("Page sucessfully loaded")
 			print("Getting rid of pop up")
 			
@@ -64,7 +63,7 @@ class InstagramBot:
 
 			# Instagram login
 			try:
-				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('jdm.crew@outlook.com')
+				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('sneakers.humor@outlook.com')
 			except NoSuchElementException:
 				self.driver.quit()
 				return print('Failed to insert instagram login email')
@@ -104,12 +103,11 @@ class InstagramBot:
 		except NoSuchWindowException:
 			return print("Session aborted")
 
-
 	def post(self):
 		try:
-			print("Posting...")
-			
 			self.driver.get("https://www.instagram.com/")
+
+			print("Posting...")
 
 			# Turning off notifications
 			try:
