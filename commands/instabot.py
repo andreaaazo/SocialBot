@@ -106,7 +106,7 @@ class InstagramBot:
 			return print("Session aborted")
 
 
-	def tiktokpost(self):
+	def post(self):
 		try:
 			print("Posting...")
 
