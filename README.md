@@ -1,5 +1,4 @@
-# Social Bot
-**Made by @andreaaa.zo & @lukesafes**
+# Social Bot made by @andreaaa.zo & @lukesafes**
 ## Description
 This is a social bot with a lot of features!
 It automates boring stuff on Instagram & TikTok.
