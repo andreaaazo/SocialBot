@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter.dnd import *
 import tkinter.font
-import commands.tiktokbot, commands.instabot
 
+from commands.instabot import *
+from commands.tiktokbot import *
+import enum
 
 class account(Frame):
 	def __init__(self, container, accountnumber):
@@ -18,6 +20,40 @@ class account(Frame):
 			if entry.get() == '':
 				entry.insert(0, text)
 				entry.config(fg='grey', highlightthickness=0, state='normal')
+
+		# setup bots
+		def startupInstagram():
+			self.bots[social.INSTAGRAM].boot()
+			self.bots[social.INSTAGRAM].login()
+			self.currentSocial = social.INSTAGRAM
+		
+		def startupTitkTok():			
+			self.bots[social.TIKTOK].boot()
+			self.bots[social.TIKTOK].login()
+			self.currentSocial = social.TIKTOK
+
+		def submitButton(filepath):
+			if self.currentSocial < 0:
+				print("You haven't logged in any social!")
+			elif self.filepath == "":
+				print("You didn't choose any image or video!")
+			else:
+				self.bots[self.currentSocial].post()
+
+		# we use this class to make more easier to read which social is used
+		class social():
+			INSTAGRAM = 0
+			TIKTOK = 1
+
+		# Setup array that will contain our bots
+		self.bots = [ InstagramBot(), TikTokBot() ]
+
+		# this is used for the "Submit" button where we have
+		# to know which social to post the image/video
+		self.currentSocial = -1			
+
+		# this will hold the image/video path for posting
+		self.filepath = ""
 
 		# Fonts
 		self.normal = tkinter.font.Font(family="Poppins Regular", size=14, weight="normal")
@@ -61,9 +97,14 @@ class account(Frame):
 		self.password.bind('<Return>', lambda event: self.focus())
 		self.password.configure(fg='grey', font=self.normal)
 
-		# credentials button
-		self.getCredentials = Button(self.formFrame, text="Log in")
+		# login Instagram
+		self.getCredentials = Button(self.formFrame, text="Login Instagram", command=startupInstagram)
 		self.getCredentials.grid(row=0, column=1, rowspan=2, padx=(100, 0), ipady=20, ipadx=10)
+		self.getCredentials.configure(font=self.button)
+		
+		# login TikTok
+		self.getCredentials = Button(self.formFrame, text="Login TikTok", command=startupTitkTok)
+		self.getCredentials.grid(row=0, column=2, sticky=W, rowspan=2, ipady=20, ipadx=10)
 		self.getCredentials.configure(font=self.button)
 
 		# post frame
@@ -100,7 +141,7 @@ class account(Frame):
 		self.hashtags.configure(fg='grey', font=self.normal)
 
 		# post credentials button
-		self.getPostCredentials = Button(self.postFrame, text="Submit")
+		self.getPostCredentials = Button(self.postFrame, text="Submit", command=submitButton)
 		self.getPostCredentials.grid(row=0, column=1, rowspan=2, ipady=20, padx=(100, 0), ipadx=10)
 		self.getPostCredentials.configure(font=self.button)
 
