@@ -64,11 +64,6 @@ class account(Frame):
 		self.getCredentials.grid(row=0, column=1, rowspan=2, padx=(100, 0), ipady=20, ipadx=10)
 		self.getCredentials.configure(font=self.button)
 
-		# status bar
-		self.statusbar = Label(self, text="Waiting", borderwidth=2, relief="solid")
-		self.statusbar.grid(row=3, column=0, columnspan=2, ipadx=250, pady=20, ipady=8)
-		self.statusbar.configure(font=self.normal)
-
 		# post frame
 		self.postFrame = LabelFrame(self, text="Insert post informations:")
 		self.postFrame.grid(row=2, column=0, pady=30, sticky=W)
@@ -111,3 +106,13 @@ class account(Frame):
 		self.getVideoPath = Button(self.postFrame, text="Select video path")
 		self.getVideoPath.grid(row=0, column=2, rowspan=2, padx=(25, 0), ipady=20)
 		self.getVideoPath.configure(font=self.button)
+
+		# status bar
+		self.statusbar = Label(self, text="Waiting", borderwidth=2, relief="solid")
+		self.statusbar.grid(row=3, column=0, columnspan=2, ipadx=250, pady=20, ipady=8)
+		self.statusbar.configure(font=self.normal)
+
+		# Instagram status bar
+		self.statusbar = Label(self, text="Waiting", borderwidth=2, relief="solid")
+		self.statusbar.grid(row=4, column=0, columnspan=2, ipadx=250, pady=20, ipady=8)
+		self.statusbar.configure(font=self.normal)

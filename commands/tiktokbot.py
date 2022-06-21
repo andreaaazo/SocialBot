@@ -219,7 +219,6 @@ class TikTokBot:
 		except NoSuchWindowException:
 			return print("Session aborted")
 
-			# Test
 
 if __name__ == '__main__':
 	bot = TikTokBot()
