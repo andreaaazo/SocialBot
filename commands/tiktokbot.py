@@ -223,10 +223,5 @@ class TikTokBot:
 if __name__ == '__main__':
 	bot = TikTokBot()
 	bot.boot()
-<<<<<<< HEAD
-	bot.tiktoklogin()
-	#bot.tiktokpost()
-=======
 	bot.login()
 	bot.post()
->>>>>>> ba54de2f1310f9429a44e92e1390659076fbd406
