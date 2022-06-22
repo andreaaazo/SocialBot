@@ -15,7 +15,7 @@ class account(Frame):
 			if entry.cget('fg') == 'grey':
 				entry.delete(0, "end")
 				entry.insert(0, '')
-				entry.config(fg='white', bd=0, highlightthickness=4, highlightcolor='green')
+				entry.config(fg='black', bd=0, highlightthickness=4, highlightcolor='green')
 
 		def focusOut(entry, text):
 			if entry.get() == '':
@@ -120,7 +120,7 @@ class account(Frame):
 		# description entry
 		self.foreDescription = Entry(self.postFrame, bd=0)
 		self.foreDescription.grid(row=0, column=0, ipadx=150, ipady=5, pady=5)
-		self.foreDescription.configure(fg='white', bd=0, highlightthickness=4, highlightcolor='green', font=self.normal)
+		self.foreDescription.configure(foreground='white', bd=0, highlightthickness=4, highlightcolor='green', font=self.normal)
 
 		self.description = Entry(self.postFrame, bd=0)
 		self.description.grid(row=0, column=0, ipadx=150, ipady=5, pady=5)
