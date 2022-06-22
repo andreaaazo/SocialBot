@@ -24,14 +24,14 @@ class account(Frame):
 
 		# setup bots
 		def startupInstagram():
+			self.currentSocial = social.INSTAGRAM
 			self.bots[social.INSTAGRAM].boot()
 			self.bots[social.INSTAGRAM].login()
-			self.currentSocial = social.INSTAGRAM
 		
 		def startupTitkTok():			
+			self.currentSocial = social.TIKTOK
 			self.bots[social.TIKTOK].boot()
 			self.bots[social.TIKTOK].login()
-			self.currentSocial = social.TIKTOK
 
 		def submitButton():
 			if self.currentSocial < 0:
@@ -42,7 +42,7 @@ class account(Frame):
 				self.bots[self.currentSocial].post()
 
 		def chooseFile():
-			self.filepath = askopenfilename(filetypes=[("All Files", "*.*")])
+			self.filepath = askopenfilename(title='Open a File',filetypes=[("All Files", "*.*")])
 			#print(self.filepath)
 
 		# we use this class to make more easier to read which social is used
