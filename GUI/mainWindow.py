@@ -16,6 +16,7 @@ class mainWindow(Tk):
 		self.dashboard = dashboard(self)
 		self.userProxy = userProxy(self)
 		self.botSettings = botSettings(self)
+		self.dashboard.pack() # Show dashboard at beginning
 
 		self.x = dict()  # creating memberwise accounts variables
 		for i in range(1, 5):
