@@ -5,7 +5,6 @@ import tkinter.font
 
 from commands.instabot import *
 from commands.tiktokbot import *
-import enum
 
 class account(Frame):
 	def __init__(self, container, accountnumber):
