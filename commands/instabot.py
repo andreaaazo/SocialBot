@@ -6,7 +6,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.keys import Keys
 
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidSessionIdException, NoSuchWindowException, InvalidArgumentException
+from selenium.common.exceptions import (
+    TimeoutException,
+    NoSuchElementException,
+    InvalidSessionIdException,
+    NoSuchWindowException,
+    InvalidArgumentException,
+)
 
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -18,195 +24,232 @@ import chromedriver_autoinstaller
 
 
 class InstagramBot:
-	def boot(self):
-		chromedriver_autoinstaller.install() # Install driver
+    def boot(self):
+        chromedriver_autoinstaller.install()  # Install driver
 
-		# Tweaks
-		self.options = Options()
-		self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
-		self.options.add_experimental_option('useAutomationExtension', False)
-		self.options.add_argument('--disable-blink-features=AutomationControlled')
-		self.options.add_argument("--profile-directory=Default")
-		self.options.add_argument("--incognito")
-		#self.options.add_argument("--headless")
-		self.driver = webdriver.Chrome(options=self.options)
+        # Tweaks
+        self.options = Options()
+        self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        self.options.add_experimental_option("useAutomationExtension", False)
+        self.options.add_argument("--disable-blink-features=AutomationControlled")
+        self.options.add_argument("--profile-directory=Default")
+        self.options.add_argument("--incognito")
+        # self.options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=self.options)
 
-		# Disable cache
-		self.driver.execute_cdp_cmd("Network.setCacheDisabled", {"cacheDisabled":True})
-	
+        # Disable cache
+        self.driver.execute_cdp_cmd("Network.setCacheDisabled", {"cacheDisabled": True})
 
-	def login(self):
-		try:
-			# Instagram login page
-			self.driver.get("https://www.instagram.com/")
-			
-			print("Loading instagram login page...")
-			print("Page sucessfully loaded")
-			print("Getting rid of pop up")
-			
-			# Check cookie pop-up
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-					(By.CLASS_NAME, 'aOOlW.HoLwm')))
-				self.driver.find_element(By.CLASS_NAME, 'aOOlW.HoLwm').click()
-				print("Pop up eliminated :)")
-			except TimeoutException:
-				return print("No pop up :)")
+    def login(self):
+        try:
+            # Instagram login page
+            self.driver.get("https://www.instagram.com/")
 
-			print("Inserting Instagram credentials")
+            print("Loading instagram login page...")
+            print("Page sucessfully loaded")
+            print("Getting rid of pop up")
 
-			# Wait until page loaded
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-					(By.XPATH, '//input[@name="username"]')))
-			except TimeoutException:
-				self.driver.quit()
-				return print('Failed to load instagram login page')
+            # Check cookie pop-up
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located((By.CLASS_NAME, "aOOlW.HoLwm"))
+                )
+                self.driver.find_element(By.CLASS_NAME, "aOOlW.HoLwm").click()
+                print("Pop up eliminated :)")
+            except TimeoutException:
+                return print("No pop up :)")
 
-			# Instagram login
-			try:
-				self.driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('dankly.post@outlook.com')
-			except NoSuchElementException:
-				self.driver.quit()
-				return print('Failed to insert instagram login email')
-			
-			try:
-				self.driver.find_element(By.XPATH, '//input[@name="password"]').send_keys('Andrea23')
-			except NoSuchElementException:
-				self.driver.quit()
-				return print('Failed to insert instagram password')
+            print("Inserting Instagram credentials")
 
-			try:
-				self.driver.find_element(By.XPATH, '//input[@name="password"]').send_keys(Keys.ENTER)		
-			except NoSuchElementException:
-				self.driver.quit()
-				return print('Failed to send Instragram login')
-			
-			print("Instagram credentials sucessfully sent")
-			
-			# Turning off notifications
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-				(By.CLASS_NAME, "_a9--._a9_1")))
-				self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
-			except TimeoutException:
-				print("Can't turn off notifications")
-				self.driver.quit()
-			
+            # Wait until page loaded
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located(
+                        (By.XPATH, '//input[@name="username"]')
+                    )
+                )
+            except TimeoutException:
+                self.driver.quit()
+                return print("Failed to load instagram login page")
 
-			print("Success login")
+            # Instagram login
+            try:
+                self.driver.find_element(
+                    By.XPATH, '//input[@name="username"]'
+                ).send_keys("dankly.post@outlook.com")
+            except NoSuchElementException:
+                self.driver.quit()
+                return print("Failed to insert instagram login email")
 
-		except MaxRetryError:
-			return print("Session aborted")
+            try:
+                self.driver.find_element(
+                    By.XPATH, '//input[@name="password"]'
+                ).send_keys("Andrea23")
+            except NoSuchElementException:
+                self.driver.quit()
+                return print("Failed to insert instagram password")
 
-		except InvalidSessionIdException:
-			return print("Session aborted")
+            try:
+                self.driver.find_element(
+                    By.XPATH, '//input[@name="password"]'
+                ).send_keys(Keys.ENTER)
+            except NoSuchElementException:
+                self.driver.quit()
+                return print("Failed to send Instragram login")
 
-		except NoSuchWindowException:
-			return print("Session aborted")
+            print("Instagram credentials sucessfully sent")
 
-	def post(self):
-		try:
-			self.driver.get("https://www.instagram.com/")
+            # Turning off notifications
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located((By.CLASS_NAME, "_a9--._a9_1"))
+                )
+                self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
+            except TimeoutException:
+                print("Can't turn off notifications")
+                self.driver.quit()
 
-			print("Posting...")
+            print("Success login")
 
-			# Turning off notifications
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-				(By.CLASS_NAME, "_abl-._abm2")))
-				self.driver.find_element(By.CLASS_NAME, "_abl-._abm2").click()
-			except TimeoutException:
-				self.driver.quit()
-				return print("Can't turn off notifications")
-			
-			# Posting video
-			try:
-				drag_drop = self.driver.find_elements(By.XPATH, '//input[@class="_ac69"]')
-				drag_drop[2].send_keys('/Users/andreazorzi/Desktop/SocialBot 2.2/test.mp4')
-			except NoSuchElementException:
-				self.driver.quit()
-				return print('Failed to drag image or video')
-			except InvalidArgumentException:
-				return print("Invalid image or video path")
+        except MaxRetryError:
+            return print("Session aborted")
 
-			print("Video successfully uploaded")
+        except InvalidSessionIdException:
+            return print("Session aborted")
 
-			# Wait until page is loaded
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located(
-				(By.CLASS_NAME, "_ac7b._ac7d")))
-			except TimeoutException:
-				self.driver.quit()
-				return print("Unable to post")
-			
-			print("Sleeping for 100 seconds to let the video upload")
+        except NoSuchWindowException:
+            return print("Session aborted")
 
-			sleep(10)
+    def post(self):
+        try:
+            self.driver.get("https://www.instagram.com/")
 
-			# Post button
-			for _ in range(2):
-				try:
-					self.driver.find_element(By.CLASS_NAME, '_ac7b._ac7d').find_element(By.CLASS_NAME, '_acan._acao._acas').click()
-					sleep(3)
-				except IndexError:
-					self.driver.quit()
-					return print("Unable to click the post button")
-			
-			print("Posting video...")
-		
-			# Add caption
-			try:
-				textarea_caption = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.XPATH, '//textarea')
-				print(len(textarea_caption))
-				textarea_caption[0].send_keys('caption')
-			except IndexError:
-				self.driver.quit()
-				return print("Unable to write the caption")
-		
-			print("Caption added")
+            print("Posting...")
 
-			# Disable likes
-			try:
-				disableLikes = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.CLASS_NAME, '_abm9')
-				disableLikes[1].click()
-				self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-				likesCheckbox = self.driver.find_element(By.CLASS_NAME, 'gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t').find_elements(By.XPATH, '//label[@class="_ac5-"]')
-				likesCheckbox[0].click()
-			except IndexError:
-				self.driver.quit()
-				return print("Unable to disable likes")
-			
-			print("Likes disabled")
+            # Turning off notifications
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located((By.CLASS_NAME, "_abl-._abm2"))
+                )
+                self.driver.find_element(By.CLASS_NAME, "_abl-._abm2").click()
+            except TimeoutException:
+                self.driver.quit()
+                return print("Can't turn off notifications")
 
-			# Post button
-			try:
-				self.driver.find_element(By.CLASS_NAME, '_ac7b._ac7d').find_element(By.CLASS_NAME, '_acan._acao._acas').click()
-			except IndexError:
-				self.driver.quit()
-				return print("Unable to click the post button")
-			
-			# Wait until post is posted
-			try:
-				WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.CLASS_NAME, '_aacl._aacr._aact._aacx._aad6._aadb')))
-			except TimeoutException:
-				self.driver.quit()
-				return print("Unable to post the video or the video upload took too long")
+            # Posting video
+            try:
+                drag_drop = self.driver.find_elements(
+                    By.XPATH, '//input[@class="_ac69"]'
+                )
+                drag_drop[2].send_keys(
+                    "/Users/andreazorzi/Desktop/SocialBot 2.2/test.mp4"
+                )
+            except NoSuchElementException:
+                self.driver.quit()
+                return print("Failed to drag image or video")
+            except InvalidArgumentException:
+                return print("Invalid image or video path")
 
-			# Return to main page
-			self.driver.get("https://www.instagram.com/")
+            print("Video successfully uploaded")
 
-		except MaxRetryError:
-			return print("Session aborted")
+            # Wait until page is loaded
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located((By.CLASS_NAME, "_ac7b._ac7d"))
+                )
+            except TimeoutException:
+                self.driver.quit()
+                return print("Unable to post")
 
-		except InvalidSessionIdException:
-			return print("Session aborted")
+            print("Sleeping for 100 seconds to let the video upload")
 
-		except NoSuchWindowException:
-			return print("Session aborted")
+            sleep(10)
 
-if __name__ == '__main__':
-	bot = InstagramBot()
-	bot.boot()
-	bot.login()
-	bot.post()
+            # Post button
+            for _ in range(2):
+                try:
+                    self.driver.find_element(By.CLASS_NAME, "_ac7b._ac7d").find_element(
+                        By.CLASS_NAME, "_acan._acao._acas"
+                    ).click()
+                    sleep(3)
+                except IndexError:
+                    self.driver.quit()
+                    return print("Unable to click the post button")
+
+            print("Posting video...")
+
+            # Add caption
+            try:
+                textarea_caption = self.driver.find_element(
+                    By.CLASS_NAME,
+                    "gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t",
+                ).find_elements(By.XPATH, "//textarea")
+                print(len(textarea_caption))
+                textarea_caption[0].send_keys("caption")
+            except IndexError:
+                self.driver.quit()
+                return print("Unable to write the caption")
+
+            print("Caption added")
+
+            # Disable likes
+            try:
+                disableLikes = self.driver.find_element(
+                    By.CLASS_NAME,
+                    "gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t",
+                ).find_elements(By.CLASS_NAME, "_abm9")
+                disableLikes[1].click()
+                self.driver.execute_script(
+                    "window.scrollTo(0, document.body.scrollHeight);"
+                )
+                likesCheckbox = self.driver.find_element(
+                    By.CLASS_NAME,
+                    "gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t",
+                ).find_elements(By.XPATH, '//label[@class="_ac5-"]')
+                likesCheckbox[0].click()
+            except IndexError:
+                self.driver.quit()
+                return print("Unable to disable likes")
+
+            print("Likes disabled")
+
+            # Post button
+            try:
+                self.driver.find_element(By.CLASS_NAME, "_ac7b._ac7d").find_element(
+                    By.CLASS_NAME, "_acan._acao._acas"
+                ).click()
+            except IndexError:
+                self.driver.quit()
+                return print("Unable to click the post button")
+
+            # Wait until post is posted
+            try:
+                WebDriverWait(self.driver, 60).until(
+                    ec.presence_of_element_located(
+                        (By.CLASS_NAME, "_aacl._aacr._aact._aacx._aad6._aadb")
+                    )
+                )
+            except TimeoutException:
+                self.driver.quit()
+                return print(
+                    "Unable to post the video or the video upload took too long"
+                )
+
+            # Return to main page
+            self.driver.get("https://www.instagram.com/")
+
+        except MaxRetryError:
+            return print("Session aborted")
+
+        except InvalidSessionIdException:
+            return print("Session aborted")
+
+        except NoSuchWindowException:
+            return print("Session aborted")
+
+
+if __name__ == "__main__":
+    bot = InstagramBot()
+    bot.boot()
+    bot.login()
+    bot.post()
