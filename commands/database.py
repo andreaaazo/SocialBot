@@ -1,6 +1,5 @@
 import sqlite3
 from tokenize import String
-from h11 import Data
 
 from traitlets import Int
 
