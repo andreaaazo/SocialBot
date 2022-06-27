@@ -9,10 +9,9 @@ class Database:
         self.conn = sqlite3.connect("accounts.db")
         self.c = self.conn.cursor()
 
-    def create_database(self):
         # It creates a table for Instagram accounts
         self.c.execute(
-            """CREATE TABLE instagram_accounts (
+            """CREATE TABLE IF NOT EXISTS instagram_accounts (
 		account_num integer,
     e_mail text,
     password text
@@ -22,7 +21,7 @@ class Database:
 
         # It creates a table for TikTok accounts
         self.c.execute(
-            """CREATE TABLE tiktok_accounts (
+            """CREATE TABLE IF NOT EXISTS tiktok_accounts (
 		account_num integer,
     e_mail text,
     password text
@@ -32,7 +31,7 @@ class Database:
 
         # It creates a table for Instagram posts
         self.c.execute(
-            """CREATE TABLE instagram_posts(
+            """CREATE TABLE IF NOT EXISTS instagram_posts(
     account_num integer,
     post_caption text,
     post_path text,
@@ -43,7 +42,7 @@ class Database:
 
         # It creates a table for TikTok posts
         self.c.execute(
-            """CREATE TABLE tiktok_posts(
+            """CREATE TABLE IF NOT EXISTS tiktok_posts(
       account_num int,
       post_caption text,
       post_path text,
@@ -121,13 +120,8 @@ class Database:
             len(self.c.fetchall()) != 0
         ):  # Check if post credentials are already saved. If TRUE update old values
             self.c.execute(
-                "UPDATE instagram_posts SET post_caption = :post_caption, post_path = :post_path, post_hashtags = :post_hashtags WHERE account_num = :account_num",
-                {
-                    "account_num": account_num,
-                    "post_caption": post_caption,
-                    "post_path": post_path,
-                    "post_hashtags": post_hashtags,
-                },
+                "UPDATE instagram_posts SET post_caption = ?, post_path = ?, post_hashtags = ? WHERE account_num = ?",
+                [post_caption, post_path, post_hashtags, account_num],
             )
             self.conn.commit()
             return "Instagram post updated"  # Return a string
@@ -141,10 +135,10 @@ class Database:
 
     def send_tiktok_post(
         self,
-        account_num: Int,
-        post_caption: String,
-        post_path: String,
-        post_hashtags: String,
+        account_num,
+        post_caption,
+        post_path,
+        post_hashtags,
     ):
         self.c.execute(
             "SELECT * FROM tiktok_posts WHERE account_num = :account_num",
@@ -156,13 +150,8 @@ class Database:
             len(self.c.fetchall()) != 0
         ):  # Check if post credentials are already saved. If TRUE update old values
             self.c.execute(
-                "UPDATE tiktok_posts SET post_caption = :post_caption, post_path = :post_path, post_hashtags = :posthashtags WHERE account_num = :account_num",
-                {
-                    "account_num": account_num,
-                    "post_caption": post_caption,
-                    "post_path": post_path,
-                    "post_hashtags": post_hashtags,
-                },
+                "UPDATE tiktok_posts SET post_caption = ?, post_path = ?, post_hashtags = ? WHERE account_num = ?",
+                [post_caption, post_path, post_hashtags, account_num],
             )  # Update old values with new values
             self.conn.commit()
             return "Instagram post updated"  # Return a string
