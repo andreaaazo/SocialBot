@@ -46,7 +46,7 @@
 
 ## 👀 To-do
 - [ ] Finish GUI
-- [ ] Implement Database
+- [x] Implement Database
 - [ ] Implement Proxies
 - [x] Finish bots
 
