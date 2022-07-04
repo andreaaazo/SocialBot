@@ -1,8 +1,8 @@
 from multiprocessing import Event
 import threading
 from threading import Event
-from instabot import InstagramBot
-from tiktokbot import TikTokBot
+from commands.instabot import InstagramBot
+from commands.tiktokbot import TikTokBot
 
 thread_dict = dict()
 

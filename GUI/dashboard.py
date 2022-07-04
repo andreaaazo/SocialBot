@@ -3,6 +3,7 @@ from tkinter import *
 import tkinter.font
 
 from commands.database import Database
+from commands.threads import ThreadDictionary
 
 
 class dashboard(Frame):
@@ -28,12 +29,15 @@ class dashboard(Frame):
         database = Database()
 
         class Accounts(LabelFrame):  # Creating accounts
-            def __init__(self, container, active_informations):
+            def __init__(self, container, active_informations, social):
                 super().__init__(container)
 
                 class Account(LabelFrame):  # Creates single account
                     def __init__(self, container, account_num, row):
                         super().__init__(container)
+                        # Bot Thread
+                        self.bot_thread = ThreadDictionary(account_num, social)
+
                         # Adding fonts
                         self.normal = tkinter.font.Font(
                             family="Poppins Regular", size=14, weight="normal"
@@ -110,7 +114,9 @@ class dashboard(Frame):
                         )
 
                         self.account_start_button = Button(
-                            self.account_buttons_frame, text="Start bot"
+                            self.account_buttons_frame,
+                            text="Start bot",
+                            command=lambda: self.bot_thread.run_thread(),
                         )
                         self.account_start_button.configure(font=self.normal)
                         self.account_start_button.grid(
@@ -118,7 +124,9 @@ class dashboard(Frame):
                         )
 
                         self.account_stop_button = Button(
-                            self.account_buttons_frame, text="Stop button"
+                            self.account_buttons_frame,
+                            text="Stop button",
+                            command=lambda: self.bot_thread.stop_thread(),
                         )
                         self.account_stop_button.configure(font=self.normal)
                         self.account_stop_button.grid(
@@ -137,8 +145,12 @@ class dashboard(Frame):
                 self.grid(row=2, column=0)
 
         # Creating 2 types of class Accounts
-        self.tiktok_accounts = Accounts(self, database.tiktok_active_informations)
-        self.instagram_accounts = Accounts(self, database.instagram_active_informations)
+        self.tiktok_accounts = Accounts(
+            self, database.tiktok_active_informations, "TikTok"
+        )
+        self.instagram_accounts = Accounts(
+            self, database.instagram_active_informations, "Instagram"
+        )
 
         # Building dropdown menu
         self.accounts = {
