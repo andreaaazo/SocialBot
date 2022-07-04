@@ -1,4 +1,3 @@
-from cProfile import label
 from tkinter import *
 from tkinter.dnd import *
 from tkinter.filedialog import askopenfilename

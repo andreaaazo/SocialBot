@@ -17,10 +17,23 @@ from urllib3.exceptions import MaxRetryError
 
 from time import sleep
 
+from database import Database
+
 import chromedriver_autoinstaller
 
 
 class TikTokBot:
+    def __init__(self, account_num) -> None:
+        self.database = Database()
+        self.email = str(self.database.tiktok_bot_informations(account_num)[0])
+        self.password = str(self.database.tiktok_bot_informations(account_num)[1])
+        self.description = (
+            str(self.database.tiktok_bot_informations(account_num)[2])
+            + "\n"
+            + str(self.database.tiktok_bot_informations(account_num)[3])
+        )
+        self.path = str(self.database.tiktok_bot_informations(account_num)[4])
+
     def boot(self):
         chromedriver_autoinstaller.install()  # Install driver
 
@@ -83,7 +96,7 @@ class TikTokBot:
             # Facebook login
             try:
                 self.driver.find_element(By.XPATH, '//input[@id="email"]').send_keys(
-                    "jdm.crew@outlook.com"
+                    self.email
                 )
             except NoSuchElementException:
                 self.driver.quit()
@@ -91,7 +104,7 @@ class TikTokBot:
 
             try:
                 self.driver.find_element(By.XPATH, '//input[@id="pass"]').send_keys(
-                    "Andrea23"
+                    self.password
                 )
             except NoSuchElementException:
                 self.driver.quit()
@@ -203,7 +216,7 @@ class TikTokBot:
             # Uploading the video
             try:
                 self.driver.find_element(By.XPATH, '//input[@type="file"]').send_keys(
-                    "/home/losilof39/Documents/repos/SocialBot/test.mp4"
+                    self.path
                 )
             except NoSuchElementException:
                 self.driver.quit()
@@ -235,7 +248,7 @@ class TikTokBot:
                 self.driver.find_element(
                     By.XPATH,
                     '//*[@id="root"]/div/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div',
-                ).send_keys(" " + "caption")
+                ).send_keys(" " + self.description)
             except NoSuchElementException:
                 self.driver.quit()
                 return print("Unable to find the caption input")
@@ -289,10 +302,3 @@ class TikTokBot:
 
         except NoSuchWindowException:
             return print("Session aborted")
-
-
-if __name__ == "__main__":
-    bot = TikTokBot()
-    bot.boot()
-    bot.login()
-    bot.post()

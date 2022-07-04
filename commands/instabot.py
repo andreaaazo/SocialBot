@@ -22,8 +22,21 @@ from time import sleep
 
 import chromedriver_autoinstaller
 
+from commands.database import Database
+
 
 class InstagramBot:
+    def __init__(self, account_num) -> None:
+        self.database = Database()
+        self.email = str(self.database.insta_bot_informations(account_num)[0])
+        self.password = str(self.database.insta_bot_informations(account_num)[1])
+        self.description = (
+            str(self.database.insta_bot_informations(account_num)[2])
+            + "\n"
+            + str(self.database.insta_bot_informations(account_num)[3])
+        )
+        self.path = str(self.database.insta_bot_informations(account_num)[4])
+
     def boot(self):
         chromedriver_autoinstaller.install()  # Install driver
 
@@ -76,7 +89,7 @@ class InstagramBot:
             try:
                 self.driver.find_element(
                     By.XPATH, '//input[@name="username"]'
-                ).send_keys("dankly.post@outlook.com")
+                ).send_keys(self.email)
             except NoSuchElementException:
                 self.driver.quit()
                 return print("Failed to insert instagram login email")
@@ -84,7 +97,7 @@ class InstagramBot:
             try:
                 self.driver.find_element(
                     By.XPATH, '//input[@name="password"]'
-                ).send_keys("Andrea23")
+                ).send_keys(self.password)
             except NoSuchElementException:
                 self.driver.quit()
                 return print("Failed to insert instagram password")
@@ -141,9 +154,7 @@ class InstagramBot:
                 drag_drop = self.driver.find_elements(
                     By.XPATH, '//input[@class="_ac69"]'
                 )
-                drag_drop[2].send_keys(
-                    "/Users/andreazorzi/Desktop/SocialBot 2.2/test.mp4"
-                )
+                drag_drop[2].send_keys(self.path)
             except NoSuchElementException:
                 self.driver.quit()
                 return print("Failed to drag image or video")
@@ -185,7 +196,7 @@ class InstagramBot:
                     "gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t",
                 ).find_elements(By.XPATH, "//textarea")
                 print(len(textarea_caption))
-                textarea_caption[0].send_keys("caption")
+                textarea_caption[0].send_keys(self.description)
             except IndexError:
                 self.driver.quit()
                 return print("Unable to write the caption")
@@ -246,10 +257,3 @@ class InstagramBot:
 
         except NoSuchWindowException:
             return print("Session aborted")
-
-
-if __name__ == "__main__":
-    bot = InstagramBot()
-    bot.boot()
-    bot.login()
-    bot.post()

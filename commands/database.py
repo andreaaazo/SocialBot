@@ -1,7 +1,4 @@
 import sqlite3
-from tokenize import String
-
-from traitlets import Int
 
 
 class Database:
@@ -51,9 +48,7 @@ class Database:
         )
         self.conn.commit()
 
-    def send_instagram_credentials(
-        self, account_num: Int, e_mail: String, password: String
-    ):
+    def send_instagram_credentials(self, account_num, e_mail, password):
         self.c.execute(
             "SELECT * FROM instagram_accounts WHERE account_num = :account_num",
             {"account_num": account_num},
@@ -77,9 +72,7 @@ class Database:
             self.conn.commit()
             return "Instagram credentials added"  # Return a string
 
-    def send_tiktok_credentials(
-        self, account_num: Int, e_mail: String, password: String
-    ):
+    def send_tiktok_credentials(self, account_num, e_mail, password):
         self.c.execute(
             "SELECT * FROM tiktok_accounts WHERE account_num = :account_num",
             {"account_num": account_num},
@@ -105,10 +98,10 @@ class Database:
 
     def send_instagram_post(
         self,
-        account_num: Int,
-        post_caption: String,
-        post_path: String,
-        post_hashtags: String,
+        account_num,
+        post_caption,
+        post_path,
+        post_hashtags,
     ):
         self.c.execute(
             "SELECT * FROM instagram_posts WHERE account_num = :account_num",
@@ -163,7 +156,7 @@ class Database:
             self.conn.commit()
             return "Instagram post added"  # Return a string
 
-    def instagram_active_informations(self, account_num: Int):
+    def instagram_active_informations(self, account_num):
         self.temp_string = ""
         self.final_string = ""
         self.data = []
@@ -198,7 +191,7 @@ class Database:
 
         return self.final_string  # Returns a string
 
-    def tiktok_active_informations(self, account_num: Int):
+    def tiktok_active_informations(self, account_num):
         self.temp_string = ""
         self.final_string = ""
         self.data = []
@@ -233,7 +226,7 @@ class Database:
 
         return self.final_string  # Returns a string
 
-    def delete_instagram_path(self, account_num: Int):
+    def delete_instagram_path(self, account_num):
         self.c.execute(
             "UPDATE instagram_posts SET post_path = 'None' WHERE account_num = :account_num",
             {"account_num": account_num},
@@ -241,10 +234,52 @@ class Database:
         self.conn.commit()
         return "Path successfully deleted"
 
-    def delete_tiktok_path(self, account_num: Int):
+    def delete_tiktok_path(self, account_num):
         self.c.execute(
             "UPDATE tiktok_posts SET post_path = 'None' WHERE account_num = :account_num",
             {"account_num": account_num},
         )  # Replace path with None
         self.conn.commit()
         return "Path successfully deleted"
+
+    def insta_bot_informations(self, account_num) -> None:
+        self.info_array = []
+        self.c.execute(
+            "SELECT e_mail, password FROM instagram_accounts WHERE account_num = ?",
+            [account_num],
+        )
+        for i in self.c.fetchmany():
+            self.info_array.extend(i)
+
+        self.conn.commit()
+
+        self.c.execute(
+            "SELECT post_caption, post_hashtags, post_path FROM instagram_posts WHERE account_num = ?",
+            [account_num],
+        )
+
+        for i in self.c.fetchmany():
+            self.info_array.extend(i)
+
+        return self.info_array
+
+    def tiktok_bot_informations(self, account_num) -> None:
+        self.info_array = []
+        self.c.execute(
+            "SELECT e_mail, password FROM tiktok_accounts WHERE account_num = ?",
+            [account_num],
+        )
+        for i in self.c.fetchmany():
+            self.info_array.extend(i)
+
+        self.conn.commit()
+
+        self.c.execute(
+            "SELECT post_caption, post_hashtags, post_path FROM tiktok_posts WHERE account_num = ?",
+            [account_num],
+        )
+
+        for i in self.c.fetchmany():
+            self.info_array.extend(i)
+
+        return self.info_array
