@@ -1,11 +1,10 @@
-from ast import arg
-from asyncio import tasks
 from multiprocessing import Event
 import threading
-from threading import Event, Thread
-import time
+from threading import Event
 from instabot import InstagramBot
 from tiktokbot import TikTokBot
+
+thread_dict = dict()
 
 
 class SocialThread(threading.Thread):
@@ -29,3 +28,21 @@ class SocialThread(threading.Thread):
                 tikbot = TikTokBot(self.account_num)
                 tikbot.login()
                 tikbot.post()
+
+
+class ThreadDictionary:
+    def __init__(self, account_num, social) -> None:
+        self.account_num = account_num
+        self.social = social
+
+    def run_thread(self):
+        thread_dict[str(self.social) + str(self.account_num)] = SocialThread(
+            self.social, self.account_num
+        )
+        thread_dict[str(self.social) + str(self.account_num)].start()
+
+    def stop_thread(self):
+        thread_dict[str(self.social) + str(self.account_num)].stop()
+        thread_dict[str(self.social) + str(self.account_num)] = SocialThread(
+            self.social, self.account_num
+        )

@@ -34,7 +34,6 @@ class TikTokBot:
         )
         self.path = str(self.database.tiktok_bot_informations(account_num)[4])
 
-    def boot(self):
         chromedriver_autoinstaller.install()  # Install driver
 
         # Tweaks

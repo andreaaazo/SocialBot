@@ -47,7 +47,11 @@ class account(Frame):
 
         class Accounts(LabelFrame):
             def __init__(
-                self, container, button_title, account_credentials, post_credentials
+                self,
+                container,
+                button_title,
+                account_credentials,
+                post_credentials,
             ):
                 super().__init__(container)
 

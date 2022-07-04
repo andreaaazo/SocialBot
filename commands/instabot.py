@@ -22,7 +22,7 @@ from time import sleep
 
 import chromedriver_autoinstaller
 
-from commands.database import Database
+from database import Database
 
 
 class InstagramBot:
@@ -37,7 +37,6 @@ class InstagramBot:
         )
         self.path = str(self.database.insta_bot_informations(account_num)[4])
 
-    def boot(self):
         chromedriver_autoinstaller.install()  # Install driver
 
         # Tweaks
