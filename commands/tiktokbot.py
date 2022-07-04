@@ -17,7 +17,7 @@ from urllib3.exceptions import MaxRetryError
 
 from time import sleep
 
-from database import Database
+from commands.database import Database
 
 import chromedriver_autoinstaller
 

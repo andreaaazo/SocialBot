@@ -22,7 +22,7 @@ from time import sleep
 
 import chromedriver_autoinstaller
 
-from database import Database
+from commands.database import Database
 
 
 class InstagramBot:
