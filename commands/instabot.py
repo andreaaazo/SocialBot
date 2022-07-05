@@ -14,7 +14,6 @@ from selenium.common.exceptions import (
     InvalidArgumentException,
 )
 
-from selenium.webdriver.common.action_chains import ActionChains
 
 from urllib3.exceptions import MaxRetryError
 
