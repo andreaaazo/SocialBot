@@ -78,8 +78,16 @@ class account(Frame):
 
                 def send_post_credentials():
                     if self.filepath == "":
-                        return print("You must choose a path")
+                        return self.botstatus.change_text("You must choose a path")
                     else:
+                        self.botstatus.change_text(
+                            post_credentials(
+                                accountnumber,
+                                self.description.get(),
+                                self.filepath,
+                                self.hashtags.get(),
+                            )
+                        )
                         return post_credentials(
                             accountnumber,
                             self.description.get(),
@@ -88,6 +96,11 @@ class account(Frame):
                         )
 
                 def send_account_credentials():
+                    self.botstatus.change_text(
+                        account_credentials(
+                            accountnumber, self.username.get(), self.password.get()
+                        )
+                    )
                     return account_credentials(
                         accountnumber, self.username.get(), self.password.get()
                     )
