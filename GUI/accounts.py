@@ -92,6 +92,9 @@ class account(Frame):
                         accountnumber, self.username.get(), self.password.get()
                     )
 
+                # Status bar
+                self.botstatus = statusbar_dict[str(social) + str(accountnumber)]
+
                 # Bot Thread
                 self.bot_thread = ThreadDictionary(accountnumber, social)
 
@@ -285,7 +288,10 @@ class account(Frame):
 
                 # status bar
                 self.statusbar = Label(
-                    self.bot_form, text="Waiting", borderwidth=2, relief="solid"
+                    self.bot_form,
+                    textvariable=self.botstatus,
+                    borderwidth=2,
+                    relief="solid",
                 )
                 self.statusbar.grid(row=1, column=0, ipadx=250, pady=20, ipady=8)
                 self.statusbar.configure(font=self.normal)

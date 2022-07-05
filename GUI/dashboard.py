@@ -1,9 +1,11 @@
 from re import I
 from tkinter import *
 import tkinter.font
+from turtle import width
 
 from commands.database import Database
 from commands.threads import ThreadDictionary
+from commands.statusbar import statusbar_dict, StatusBar
 
 
 class dashboard(Frame):
@@ -36,6 +38,10 @@ class dashboard(Frame):
                     def __init__(self, container, account_num, row):
                         super().__init__(container)
                         self.account_num = account_num
+
+                        # Status bar init
+                        statusbar_dict[str(social) + str(account_num)] = StatusBar()
+                        self.botstatus = statusbar_dict[str(social) + str(account_num)]
 
                         # Bot Thread
                         self.bot_thread = ThreadDictionary(account_num, social)
@@ -99,15 +105,24 @@ class dashboard(Frame):
                         self.account_bot_status_frame.grid(
                             row=0, column=1, pady=(10, 0), stick=NW, padx=(25, 0)
                         )
+                        self.shadow_account_bot_status = Label(
+                            self.account_bot_status_frame,
+                            text="",
+                            background="grey",
+                        )
+                        self.shadow_account_bot_status.configure(font=self.normal)
+                        self.shadow_account_bot_status.grid(
+                            row=1, column=1, pady=(10, 0), sticky=W, ipady=5, ipadx=150
+                        )
 
                         self.account_bot_status = Label(
                             self.account_bot_status_frame,
-                            text="Waiting",
+                            textvariable=self.botstatus,
                             background="grey",
                         )
                         self.account_bot_status.configure(font=self.normal)
                         self.account_bot_status.grid(
-                            row=1, column=1, pady=(10, 0), sticky=W, ipady=5, ipadx=150
+                            row=1, column=1, pady=(10, 0), sticky=W, ipady=5
                         )
 
                         # Account 1 - Short buttons

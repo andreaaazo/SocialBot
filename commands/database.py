@@ -1,3 +1,4 @@
+import functools
 import sqlite3
 
 
@@ -157,74 +158,34 @@ class Database:
             return "Instagram post added"  # Return a string
 
     def instagram_active_informations(self, account_num):
-        self.temp_string = ""
-        self.final_string = ""
-        self.data = []
-        self.invalid_characters = ["(", ")", "'"]
         self.c.execute(
-            "SELECT e_mail FROM instagram_accounts WHERE account_num = :account_num",
-            {"account_num": account_num},
+            "SELECT A.e_mail, B.post_hashtags FROM instagram_accounts A JOIN instagram_posts B ON A.account_num = B.account_num WHERE A.account_num = ?",
+            [account_num],
         )  # Getting e-mail
-        self.data.append(self.c.fetchone())
-        self.c.execute(
-            "SELECT post_caption FROM instagram_posts WHERE account_num = :account_num",
-            {"account_num": account_num},
-        )  # Getting caption
-        self.data.append(self.c.fetchone())
-        self.c.execute(
-            "SELECT post_hashtags FROM instagram_posts WHERE account_num = :account_num",
-            {"account_num": account_num},
-        )  # Getting hashtags
-        self.data.append(self.c.fetchone())
-        for i in self.data:  # Save array values in a temporary string
-            self.temp_string += str(i)
-
-        for (
-            i
-        ) in (
-            self.temp_string
-        ):  # Delete invalid characters from the temporary string and save it in a final string
-            if i in self.invalid_characters:
-                pass
-            else:
-                self.final_string += i
-
-        return self.final_string  # Returns a string
+        self.data = self.c.fetchall()
+        self.string = "No data\nNo data"
+        if self.data:
+            for i in self.data:
+                self.string = "\n".join(i)
+                return self.string
+        else:
+            return self.string
+        self.conn.commit()
 
     def tiktok_active_informations(self, account_num):
-        self.temp_string = ""
-        self.final_string = ""
-        self.data = []
-        self.invalid_characters = ["(", ")", "'"]
         self.c.execute(
-            "SELECT e_mail FROM tiktok_accounts WHERE account_num = :account_num",
-            {"account_num": account_num},
+            "SELECT A.e_mail, B.post_hashtags FROM tiktok_accounts A JOIN tiktok_posts B ON A.account_num = B.account_num WHERE A.account_num = ?",
+            [account_num],
         )  # Getting e-mail
-        self.data.append(self.c.fetchone())
-        self.c.execute(
-            "SELECT post_caption FROM tiktok_posts WHERE account_num = :account_num",
-            {"account_num": account_num},
-        )  # Getting caption
-        self.data.append(self.c.fetchone())
-        self.c.execute(
-            "SELECT post_hashtags FROM tiktok_posts WHERE account_num = :account_num",
-            {"account_num": account_num},
-        )  # Getting hashtags
-        self.data.append(self.c.fetchone())
-        for i in self.data:  # Save array values in a temporary string
-            self.temp_string += str(i)
-
-        for (
-            i
-        ) in (
-            self.temp_string
-        ):  # Delete invalid characters from the temporary string and save it in a final string
-            if i in self.invalid_characters:
-                pass
-            else:
-                self.final_string += i
-
-        return self.final_string  # Returns a string
+        self.data = self.c.fetchall()
+        self.string = "No data\nNo data"
+        if self.data:
+            for i in self.data:
+                self.string = "\n".join(i)
+                return self.string
+        else:
+            return self.string
+        self.conn.commit()
 
     def delete_instagram_path(self, account_num):
         self.c.execute(

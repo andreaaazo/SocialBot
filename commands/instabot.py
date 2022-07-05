@@ -24,9 +24,13 @@ import chromedriver_autoinstaller
 
 from commands.database import Database
 
+from commands.statusbar import statusbar_dict
+
 
 class InstagramBot:
     def __init__(self, account_num) -> None:
+        self.status = statusbar_dict["Instagram" + str(account_num)]
+
         self.database = Database()
         self.email = str(self.database.insta_bot_informations(account_num)[0])
         self.password = str(self.database.insta_bot_informations(account_num)[1])
@@ -57,9 +61,9 @@ class InstagramBot:
             # Instagram login page
             self.driver.get("https://www.instagram.com/")
 
-            print("Loading instagram login page...")
-            print("Page sucessfully loaded")
-            print("Getting rid of pop up")
+            self.status.change_text("Loading instagram login page...")
+            self.status.change_text("Page sucessfully loaded")
+            self.status.change_text("Getting rid of pop up")
 
             # Check cookie pop-up
             try:
@@ -67,11 +71,11 @@ class InstagramBot:
                     ec.presence_of_element_located((By.CLASS_NAME, "aOOlW.HoLwm"))
                 )
                 self.driver.find_element(By.CLASS_NAME, "aOOlW.HoLwm").click()
-                print("Pop up eliminated :)")
+                self.status.change_text("Pop up eliminated :)")
             except TimeoutException:
-                return print("No pop up :)")
+                return self.status.change_text("No pop up :)")
 
-            print("Inserting Instagram credentials")
+            self.status.change_text("Inserting Instagram credentials")
 
             # Wait until page loaded
             try:
@@ -82,7 +86,7 @@ class InstagramBot:
                 )
             except TimeoutException:
                 self.driver.quit()
-                return print("Failed to load instagram login page")
+                return self.status.change_text("Failed to load instagram login page")
 
             # Instagram login
             try:
@@ -91,7 +95,7 @@ class InstagramBot:
                 ).send_keys(self.email)
             except NoSuchElementException:
                 self.driver.quit()
-                return print("Failed to insert instagram login email")
+                return self.status.change_text("Failed to insert instagram login email")
 
             try:
                 self.driver.find_element(
@@ -99,7 +103,7 @@ class InstagramBot:
                 ).send_keys(self.password)
             except NoSuchElementException:
                 self.driver.quit()
-                return print("Failed to insert instagram password")
+                return self.status.change_text("Failed to insert instagram password")
 
             try:
                 self.driver.find_element(
@@ -107,9 +111,9 @@ class InstagramBot:
                 ).send_keys(Keys.ENTER)
             except NoSuchElementException:
                 self.driver.quit()
-                return print("Failed to send Instragram login")
+                return self.status.change_text("Failed to send Instragram login")
 
-            print("Instagram credentials sucessfully sent")
+            self.status.change_text("Instagram credentials sucessfully sent")
 
             # Turning off notifications
             try:
@@ -118,25 +122,25 @@ class InstagramBot:
                 )
                 self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
             except TimeoutException:
-                print("Can't turn off notifications")
+                self.status.change_text("Can't turn off notifications")
                 self.driver.quit()
 
-            print("Success login")
+            self.status.change_text("Success login")
 
         except MaxRetryError:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
 
         except InvalidSessionIdException:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
 
         except NoSuchWindowException:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
 
     def post(self):
         try:
             self.driver.get("https://www.instagram.com/")
 
-            print("Posting...")
+            self.status.change_text("Posting...")
 
             # Turning off notifications
             try:
@@ -146,7 +150,7 @@ class InstagramBot:
                 self.driver.find_element(By.CLASS_NAME, "_abl-._abm2").click()
             except TimeoutException:
                 self.driver.quit()
-                return print("Can't turn off notifications")
+                return self.status.change_text("Can't turn off notifications")
 
             # Posting video
             try:
@@ -156,11 +160,11 @@ class InstagramBot:
                 drag_drop[2].send_keys(self.path)
             except NoSuchElementException:
                 self.driver.quit()
-                return print("Failed to drag image or video")
+                return self.status.change_text("Failed to drag image or video")
             except InvalidArgumentException:
-                return print("Invalid image or video path")
+                return self.status.change_text("Invalid image or video path")
 
-            print("Video successfully uploaded")
+            self.status.change_text("Video successfully uploaded")
 
             # Wait until page is loaded
             try:
@@ -169,9 +173,9 @@ class InstagramBot:
                 )
             except TimeoutException:
                 self.driver.quit()
-                return print("Unable to post")
+                return self.status.change_text("Unable to post")
 
-            print("Sleeping for 100 seconds to let the video upload")
+            self.status.change_text("Sleeping for 100 seconds to let the video upload")
 
             sleep(10)
 
@@ -184,9 +188,9 @@ class InstagramBot:
                     sleep(3)
                 except IndexError:
                     self.driver.quit()
-                    return print("Unable to click the post button")
+                    return self.status.change_text("Unable to click the post button")
 
-            print("Posting video...")
+            self.status.change_text("Posting video...")
 
             # Add caption
             try:
@@ -194,13 +198,13 @@ class InstagramBot:
                     By.CLASS_NAME,
                     "gs1a9yip.rq0escxv.j83agx80.cbu4d94t.buofh1pr.taijpn5t",
                 ).find_elements(By.XPATH, "//textarea")
-                print(len(textarea_caption))
+                self.status.change_text(len(textarea_caption))
                 textarea_caption[0].send_keys(self.description)
             except IndexError:
                 self.driver.quit()
-                return print("Unable to write the caption")
+                return self.status.change_text("Unable to write the caption")
 
-            print("Caption added")
+            self.status.change_text("Caption added")
 
             # Disable likes
             try:
@@ -219,9 +223,9 @@ class InstagramBot:
                 likesCheckbox[0].click()
             except IndexError:
                 self.driver.quit()
-                return print("Unable to disable likes")
+                return self.status.change_text("Unable to disable likes")
 
-            print("Likes disabled")
+            self.status.change_text("Likes disabled")
 
             # Post button
             try:
@@ -230,7 +234,7 @@ class InstagramBot:
                 ).click()
             except IndexError:
                 self.driver.quit()
-                return print("Unable to click the post button")
+                return self.status.change_text("Unable to click the post button")
 
             # Wait until post is posted
             try:
@@ -241,7 +245,7 @@ class InstagramBot:
                 )
             except TimeoutException:
                 self.driver.quit()
-                return print(
+                return self.status.change_text(
                     "Unable to post the video or the video upload took too long"
                 )
 
@@ -249,10 +253,10 @@ class InstagramBot:
             self.driver.get("https://www.instagram.com/")
 
         except MaxRetryError:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
 
         except InvalidSessionIdException:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
 
         except NoSuchWindowException:
-            return print("Session aborted")
+            return self.status.change_text("Session aborted")
