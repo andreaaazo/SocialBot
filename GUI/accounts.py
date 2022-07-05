@@ -59,6 +59,16 @@ class account(Frame):
 
                 self.filepath = ""
 
+                def start_bot_button():
+                    self.start_bot["state"] = "disabled"
+                    self.stop_bot["state"] = "normal"
+                    self.bot_thread.run_thread()
+
+                def stop_bot_button():
+                    self.start_bot["state"] = "normal"
+                    self.stop_bot["state"] = "disabled"
+                    self.bot_thread.stop_thread()
+
                 def choose_path():
                     self.filepath = askopenfilename(
                         title="Open a File", filetypes=[("All Files", "*.*")]
@@ -259,7 +269,7 @@ class account(Frame):
                 self.start_bot = Button(
                     self.bot_form,
                     text="Start bot",
-                    command=lambda: self.bot_thread.run_thread(),
+                    command=lambda: start_bot_button(),
                 )
                 self.start_bot.configure(font=self.semibold)
                 self.start_bot.grid(row=0, column=0)
@@ -268,7 +278,7 @@ class account(Frame):
                 self.stop_bot = Button(
                     self.bot_form,
                     text="Stop bot",
-                    command=lambda: self.bot_thread.stop_thread(),
+                    command=lambda: stop_bot_button(),
                 )
                 self.stop_bot.configure(font=self.semibold)
                 self.stop_bot.grid(row=0, column=1)
@@ -279,6 +289,10 @@ class account(Frame):
                 )
                 self.statusbar.grid(row=1, column=0, ipadx=250, pady=20, ipady=8)
                 self.statusbar.configure(font=self.normal)
+
+                # initialize buttons
+                self.start_bot["state"] = "normal"
+                self.stop_bot["state"] = "disabled"
 
             def show_accounts(self):
                 self.configure(bd=0)

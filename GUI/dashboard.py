@@ -35,8 +35,14 @@ class dashboard(Frame):
                 class Account(LabelFrame):  # Creates single account
                     def __init__(self, container, account_num, row):
                         super().__init__(container)
+                        self.account_num = account_num
+
                         # Bot Thread
                         self.bot_thread = ThreadDictionary(account_num, social)
+
+                        # Active informations string var
+                        self.active_informations = StringVar()
+                        self.active_informations.set(active_informations(account_num))
 
                         # Adding fonts
                         self.normal = tkinter.font.Font(
@@ -79,7 +85,7 @@ class dashboard(Frame):
 
                         self.account_active_informations = Label(
                             self.account_active_informations_frame,
-                            text=active_informations(account_num),
+                            textvariable=self.active_informations,
                             justify=LEFT,
                         )
                         self.account_active_informations.configure(font=self.normal)
@@ -133,6 +139,11 @@ class dashboard(Frame):
                             row=0, column=1, pady=(10, 0), sticky=W, ipady=10
                         )
 
+                    def refresh(self):
+                        self.active_informations.set(
+                            active_informations(self.account_num)
+                        )
+
                 self.account_dict = dict()
                 for i in range(1, 5):  # Store all 5 accounts in a dictionary
                     self.account_dict[i] = Account(self, int(i), int(i))
@@ -143,6 +154,10 @@ class dashboard(Frame):
             def show_accounts(self):  # Show the accounts
                 self.configure(bd=0)
                 self.grid(row=2, column=0)
+
+            def refresh_accounts(self):
+                for i in self.account_dict:
+                    self.account_dict[i].refresh()
 
         # Creating 2 types of class Accounts
         self.tiktok_accounts = Accounts(
@@ -171,7 +186,7 @@ class dashboard(Frame):
                 self.accounts["Instagram"].grid_forget()
             else:
                 self.accounts["TikTok"].grid_forget()
-
+            self.accounts[self.selected.get()].refresh_accounts()
             self.accounts[self.selected.get()].show_accounts()
 
         # Drop down menu
@@ -179,3 +194,7 @@ class dashboard(Frame):
             self, self.selected, *self.accounts, command=lambda event: show()
         )
         self.dropdown_menu.grid(row=1, column=0, sticky=W)
+
+    def refresh(self):
+        for i in self.accounts:
+            self.accounts[i].refresh_accounts()

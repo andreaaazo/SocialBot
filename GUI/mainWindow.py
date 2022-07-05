@@ -24,6 +24,7 @@ class mainWindow(Tk):
 
         def show_dashboard():
             forget_all_frames()
+            self.dashboard.refresh()
             self.dashboard.pack()
 
         def show_account(i):
