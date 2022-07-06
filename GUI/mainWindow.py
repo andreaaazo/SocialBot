@@ -1,3 +1,4 @@
+from cv2 import exp
 from .dashboard import dashboard
 from .accounts import *
 from .freeProxy import *
@@ -37,7 +38,7 @@ class mainWindow(Tk):
 
         def show_bot_settings():
             forget_all_frames()
-            self.botSettings.pack()
+            self.botSettings.pack(fill="x")
 
         def show_user_proxy():
             forget_all_frames()
