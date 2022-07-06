@@ -306,3 +306,15 @@ class TikTokBot:
 
         except NoSuchWindowException:
             return self.status.change_text("Session aborted")
+
+    def quit(self):
+        try:
+            self.driver.quit()
+        except MaxRetryError:
+            return self.status.change_text("Session closed")
+
+        except InvalidSessionIdException:
+            return self.status.change_text("Session closed")
+
+        except NoSuchWindowException:
+            return self.status.change_text("Session closed")

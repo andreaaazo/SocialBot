@@ -3,6 +3,7 @@ import threading
 from threading import Event
 from commands.instabot import InstagramBot
 from commands.tiktokbot import TikTokBot
+from commands.statusbar import statusbar_dict
 
 thread_dict = dict()
 
@@ -13,21 +14,37 @@ class SocialThread(threading.Thread):
         self.stop_event = Event()
         self.social = social
         self.account_num = account_num
+        self.status = statusbar_dict[str(self.social) + str(self.account_num)]
 
     def stop(self):
+        self.status.change_text("Finishing task...")
         self.stop_event.set()
 
     def run(self):
         if self.social == "Instagram":
             while not self.stop_event.is_set():
-                bot = InstagramBot(self.account_num)
-                bot.login()
-                bot.post()
+                instabot = InstagramBot(self.account_num)
+                if not self.stop_event.is_set():
+                    instabot.login()
+                else:
+                    pass
+                if not self.stop_event.is_set():
+                    instabot.post()
+                else:
+                    pass
+            instabot.quit()
         else:
             while not self.stop_event.is_set():
                 tikbot = TikTokBot(self.account_num)
-                tikbot.login()
-                tikbot.post()
+                if not self.stop_event.is_set():
+                    tikbot.login()
+                else:
+                    pass
+                if not self.stop_event.is_set():
+                    tikbot.post()
+                else:
+                    pass
+            tikbot.quit()
 
 
 class ThreadDictionary:
