@@ -99,6 +99,7 @@ class botSettings(Frame):
                                     pass
 
                         # Label Frame position
+                        self.configure(bd=0)
                         self.grid(row=row, column=0, pady=15, padx=20, sticky=W)
 
                         # Fonts
@@ -136,12 +137,12 @@ class botSettings(Frame):
                             command=lambda: update_auto_post(),
                         )
                         self.checkbox.configure(font=self.normal)
-                        self.checkbox.grid(row=0, column=1, padx=(30, 0))
+                        self.checkbox.grid(row=0, column=1, padx=(500, 0))
 
                         # Text
                         self.sleeping_text = Label(self, text="The bot will sleep for")
                         self.sleeping_text.configure(font=self.normal)
-                        self.sleeping_text.grid(row=0, column=2, padx=(30, 0))
+                        self.sleeping_text.grid(row=0, column=2, padx=(50, 0))
 
                         # Posting delay
                         self.menu_text = StringVar()
@@ -167,14 +168,16 @@ class botSettings(Frame):
                 for i in range(1, 5):
                     self.account_settings.append(AccountSettings(self, i, i))
 
+                self.configure(bd=0)
+
                 self.grid_forget()
 
             def show_accounts(self):
                 self.grid(row=1, column=0)
 
         self.accounts = {
-            "Instagram": SocialAccountSettings(self.auto_post_frame, "Instagram"),
             "TikTok": SocialAccountSettings(self.auto_post_frame, "TikTok"),
+            "Instagram": SocialAccountSettings(self.auto_post_frame, "Instagram"),
         }
 
         # Option menu string var
