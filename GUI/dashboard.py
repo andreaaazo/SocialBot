@@ -1,7 +1,6 @@
-from re import I
 from tkinter import *
 import tkinter.font
-from turtle import width
+from datetime import datetime
 
 from commands.database import Database
 from commands.threads import ThreadDictionary
@@ -11,6 +10,11 @@ from commands.statusbar import statusbar_dict, StatusBar
 class dashboard(Frame):
     def __init__(self, container):
         super().__init__(container)
+
+        def update_time():
+            self.current_time = datetime.now().strftime("%H : %M : %S")
+            self.time.configure(text=self.current_time, font=self.normal)
+            self.time.after(1000, update_time)
 
         # Adding fonts
         self.normal = tkinter.font.Font(
@@ -209,6 +213,11 @@ class dashboard(Frame):
             self, self.selected, *self.accounts, command=lambda event: show()
         )
         self.dropdown_menu.grid(row=1, column=0, sticky=W)
+
+        # Current time
+        self.time = Label(self)
+        self.time.grid(row=1, column=0, sticky=E)
+        self.time.after(1000, update_time)
 
     def refresh(self):
         for i in self.accounts:
