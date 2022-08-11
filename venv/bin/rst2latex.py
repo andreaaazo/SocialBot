@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 
 # $Id: rst2latex.py 8956 2022-01-20 10:11:44Z milde $
 # Author: David Goodger <goodger@python.org>

@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 
 # $Id: rst2odt.py 8994 2022-01-29 16:28:17Z milde $
 # Author: Dave Kuhlman <dkuhlman@rexx.com>

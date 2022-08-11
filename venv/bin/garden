@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 
 import sys
 import argparse

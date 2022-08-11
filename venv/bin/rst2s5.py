@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 
 # $Id: rst2s5.py 8927 2022-01-03 23:50:05Z milde $
 # Author: Chris Liechti <cliechti@gmx.net>

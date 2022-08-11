@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3" "$0" "$@"
-' '''
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

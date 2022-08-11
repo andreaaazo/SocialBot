@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 
 # $Id: rst2odt_prepstyles.py 8932 2022-01-05 14:59:31Z milde $
 # Author: Dave Kuhlman <dkuhlman@rexx.com>

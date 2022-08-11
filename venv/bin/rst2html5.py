@@ -1,4 +1,4 @@
-#!/Users/andreazorzi/Desktop/SocialBot 3.1/venv/bin/python3
+#!/Users/andreazorzi/Desktop/SocialBot_3.1/venv/bin/python3
 # :Copyright: © 2015 Günter Milde.
 # :License: Released under the terms of the `2-Clause BSD license`_, in short:
 #
