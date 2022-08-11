@@ -27,9 +27,8 @@
 
 ## ⚡️ Features
 * **Main Features**
-  * Proxy switch
   * Auto-post
-  * Manage 5 accounts simultaneosly
+  * Manage 4 accounts simultaneosly
   * Informations stored in a database
 
 * **TikTok**
@@ -46,9 +45,9 @@
 
 ## 👀 To-do
 - [ ] Finish GUI
-- [x] Implement Database
+- [ ] Implement Database
 - [ ] Implement Proxies
-- [x] Finish bots
+- [ ] Finish bots
 
 <br />
 
