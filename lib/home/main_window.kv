@@ -1,20 +1,57 @@
-#: import colors lib.colors.colors.Colors
-# COLORS: black, black_cont, red, gray, white, green
-
 #: import LabelH1 widgets.labels
+#: import IconButton widgets.buttons
+
+# COLORS: black, black_cont, red, gray, white, green
 
 <MainWindow>:
     orientation: "vertical"
 
-    MDCard:
+    MDBoxLayout:  # UP MENU
         size_hint: 1, .11
         radius: (0, 0, 25, 25)
-        md_bg_color: colors.black_cont
-        
-        LabelH1:
-            text: "SocialBot"
-            color: 1, 0, 0
-            halign: "center"
+        md_bg_color: app.colors.black_cont
+        spacing: 40
+    
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint: .6, 1
+
+            MDIconButton:
+                padding: 10
+                icon: "dots-horizontal"
+                md_bg_color: app.colors.gray
+                pos_hint: {"center_y" : .5}
+                
+            LabelH1:
+                text: "Social Bot"
+                color: app.colors.white
+                halign: "center"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 30
+            MDTextButton:
+                text: "Support"
+                pos_hint: {"center_y" : .5}
+            MDTextButton:
+                text: "Pricing"
+                pos_hint: {"center_y" : .5}
+            MDTextButton:
+                text: "Your Plan"
+                pos_hint: {"center_y" : .5}
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            MDTextButton:
+                text: "Instagram"
+            MDTextButton:
+                text: "TikTok"
+
+        MDCard:
+            MDRelativeLayout:
+                MDIconButton:
+                    icon: "dots-vertical"
+                    pos_hint: {"top" : 1, "right" : 1}
 
     MDBoxLayout:
         orientation: "horizontal"
@@ -23,8 +60,9 @@
             padding: ["10dp"]
             size_hint: .18, 1
 
-            MDCard:
-                md_bg_color: colors.black_cont
+            MDBoxLayout:
+                radius: (25, 25, 25, 25)
+                md_bg_color: app.colors.black_cont
                 pos_hint: {"center_y" : .5}
                 MDLabel:
                     halign: "center"
