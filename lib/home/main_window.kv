@@ -1,54 +1,76 @@
 #: import LabelH1 widgets.labels
+#: import NavBarUpTextBtn widgets.labels
 #: import IconButton widgets.buttons
 
 # COLORS: black, black_cont, red, gray, white, green
+# CUSTOM WIDGETS: LabelH1, NavBarUpTextBtn
 
 <MainWindow>:
     orientation: "vertical"
 
+
     MDBoxLayout:  # UP MENU
-        size_hint: 1, .11
+        size_hint: 1, .09
         radius: (0, 0, 25, 25)
         md_bg_color: app.colors.black_cont
-        spacing: 40
     
         MDBoxLayout:
+            padding: ["20dp", 0, 0, 0]
+            spacing: "15dp"
             orientation: "horizontal"
-            size_hint: .6, 1
+            size_hint: None, None
+            size: "200dp", 0
+            pos_hint:{"center_y" : .5}
 
             MDIconButton:
-                padding: 10
-                icon: "dots-horizontal"
-                md_bg_color: app.colors.gray
-                pos_hint: {"center_y" : .5}
+                icon: "assets/images/logo.png"
+                icon_color: (1, 0, 0)
+                icon_size: "10dp"
+                md_bg_color: (1, 1, 1, 0)
+                pos_hint: {"center_x": .5, "center_y": .5}
                 
             LabelH1:
                 text: "Social Bot"
                 color: app.colors.white
-                halign: "center"
 
         MDBoxLayout:
             orientation: "horizontal"
-            spacing: 30
-            MDTextButton:
+            spacing: "20dp"
+            adaptive_width: True
+            # padding: [25]
+
+            NavBarUpTextBtn:
                 text: "Support"
-                pos_hint: {"center_y" : .5}
-            MDTextButton:
+
+            NavBarUpTextBtn:
                 text: "Pricing"
-                pos_hint: {"center_y" : .5}
-            MDTextButton:
+        
+            NavBarUpTextBtn:
                 text: "Your Plan"
-                pos_hint: {"center_y" : .5}
+                
 
         MDBoxLayout:
-            orientation: "horizontal"
-            MDTextButton:
-                text: "Instagram"
-            MDTextButton:
-                text: "TikTok"
+            orientation: "vertical"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                adaptive_width: True
+                spacing: "20dp"
+                pos_hint: {"center_x" : .5}
+
+                NavBarUpTextBtn:
+                    text: "Instagram"
+                    color: app.colors.white
+                    font_size: "14dp"
+
+                NavBarUpTextBtn:
+                    text: "TikTok"
+                    color: app.colors.white
+                    font_size: "14dp"
 
         MDCard:
-            MDRelativeLayout:
+            size_hint_x: .4
+            MDBoxLayout:
                 MDIconButton:
                     icon: "dots-vertical"
                     pos_hint: {"top" : 1, "right" : 1}

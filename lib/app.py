@@ -4,7 +4,7 @@ from kivy.utils import QueryDict, rgba
 
 # Create main app
 class SocialBotApp(MDApp):
-    colors = QueryDict()
+    colors = QueryDict()  # Define colors
     colors.black = rgba("#08090A")
     colors.black_cont = rgba("#121517")
     colors.red = rgba("#D90429")
