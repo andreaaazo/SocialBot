@@ -1,6 +1,15 @@
+import imp
+from multiprocessing.spawn import import_main_path
 from kivymd.app import MDApp
-from .home import MainWindow
 from kivy.utils import QueryDict, rgba
+from lib import MainWindow
+from kivy.core.window import Window
+from kivy.metrics import dp
+
+# Minimum window size
+Window.minimum_height = dp(500)
+Window.minimum_width = dp(700)
+
 
 # Create main app
 class SocialBotApp(MDApp):

@@ -5,7 +5,7 @@ from kivy.lang import Builder as Bd
 design = """
 <LabelH1>:
     font_name: "assets/fonts/Poppins-Bold.ttf"
-    font_size: "20dp"
+    font_size: "20sp"
 """
 Bd.load_string(design)
 

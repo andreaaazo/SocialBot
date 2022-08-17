@@ -1,1 +1,1 @@
-from .app import SocialBotApp
+from .main_window import MainWindow
